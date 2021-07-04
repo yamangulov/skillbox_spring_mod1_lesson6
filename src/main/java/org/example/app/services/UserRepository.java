@@ -3,6 +3,7 @@ package org.example.app.services;
 import org.apache.log4j.Logger;
 import org.example.web.dto.User;
 import org.springframework.stereotype.Repository;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,5 +45,20 @@ public class UserRepository implements ProjectRepository<User> {
             }
         }
         return false;
+    }
+
+    @Override
+    public boolean removeItemByAuthor(String author) {
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public boolean removeItemByTitle(String title) {
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public boolean removeItemBySize(Integer size) {
+        throw new NotImplementedException();
     }
 }

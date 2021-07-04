@@ -39,4 +39,47 @@ public class BookRepository implements ProjectRepository<Book> {
         }
         return false;
     }
+
+    @Override
+    public boolean removeItemByAuthor(String author) {
+        List<Book> booksForRemoving = new ArrayList<>();
+        for (Book book : retrieveAll()) {
+            if (book.getAuthor().contains(author)) {
+                booksForRemoving.add(book);
+            }
+        }
+        return removeItemsByList(booksForRemoving);
+    }
+
+    @Override
+    public boolean removeItemByTitle(String title) {
+        List<Book> booksForRemoving = new ArrayList<>();
+        for (Book book : retrieveAll()) {
+            if (book.getTitle().contains(title)) {
+                booksForRemoving.add(book);
+            }
+        }
+        return removeItemsByList(booksForRemoving);
+    }
+
+    @Override
+    public boolean removeItemBySize(Integer size) {
+        List<Book> booksForRemoving = new ArrayList<>();
+        for (Book book : retrieveAll()) {
+            if (book.getSize().equals(size)) {
+                booksForRemoving.add(book);
+            }
+        }
+        return removeItemsByList(booksForRemoving);
+    }
+
+    private boolean removeItemsByList(List<Book> booksForRemoving) {
+        if (!booksForRemoving.isEmpty()) {
+            for (Book book : booksForRemoving) {
+                repo.remove(book);
+            }
+            return true;
+        }
+        return false;
+    }
 }
