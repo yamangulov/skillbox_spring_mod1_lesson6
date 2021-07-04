@@ -31,6 +31,21 @@ public class BookShelfController {
         return "book_shelf";
     }
 
+    @PostMapping("/filter")
+    public String filter(@RequestParam(value = "author") String author,
+                         @RequestParam(value = "title") String title,
+                         @RequestParam(value = "minSize") Integer minSize,
+                         @RequestParam(value = "maxSize") Integer maxSize) {
+        bookService.filterByParams(author, title, minSize, maxSize);
+        return "redirect:/books/shelf";
+    }
+
+    @GetMapping("/undoFilter")
+    public String undoFilter() {
+        bookService.undoFilter();
+        return "redirect:/books/shelf";
+    }
+
     @PostMapping("/save")
     public String saveBook(Book book) {
         bookService.saveBook(book);

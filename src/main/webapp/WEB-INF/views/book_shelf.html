@@ -103,6 +103,34 @@
     </form>
 
 
+    <form method="post" th:action="@{/books/filter}">
+        <table>
+            <tr>
+                <td>
+                    <input type="text" placeholder="author" th:name="author">
+                </td>
+                <td>
+                    <input type="text" placeholder="book_title" th:name="title">
+                </td>
+                <td>
+                    <input type="text" placeholder="min size (pages)" th:name="minSize">
+                </td>
+                <td>
+                    <input type="text" placeholder="max size (pages)" th:name="maxSize">
+                </td>
+                <td>
+                    <input type="submit" value="filter">
+                </td>
+            </tr>
+        </table>
+    </form>
+
+    <a th:href="@{/books/undoFilter}">
+        <button name="undo_filter" type="button">
+            Reset filter
+        </button>
+    </a>
+
     <table id="books">
         <tr>
             <th>id</th>

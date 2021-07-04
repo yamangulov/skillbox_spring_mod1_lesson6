@@ -25,6 +25,16 @@ public class UserRepository implements ProjectRepository<User> {
     }
 
     @Override
+    public void filterByParams(String author, String title, Integer minSize, Integer maxSize) {
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public void undoFilter() {
+        throw new NotImplementedException();
+    }
+
+    @Override
     public void store(User user) {
         for (User existingUser : retrieveAll()) {
             if (existingUser.getUser().equals(user.getUser())) return;
@@ -61,4 +71,5 @@ public class UserRepository implements ProjectRepository<User> {
     public boolean removeItemBySize(Integer size) {
         throw new NotImplementedException();
     }
+
 }
