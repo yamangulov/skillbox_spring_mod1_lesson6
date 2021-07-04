@@ -2,7 +2,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>My book shelf</title>
+    <title>User control</title>
     <style>
         #root_container {
             position: absolute;
@@ -11,7 +11,7 @@
             transform: translate(-50%, -50%);
         }
 
-        #books {
+        #users {
             width: 50%;
             border-collapse: collapse;
         }
@@ -31,17 +31,14 @@
 </head>
 <body>
 <div id="root_container">
-    <form method="post" th:action="@{/books/save}" th:object="${book}">
+    <form method="post" th:action="@{/users/register}" th:object="${user}">
         <table>
             <tr>
                 <td>
-                    <input type="text" placeholder="author" th:field="*{author}">
+                    <input type="text" placeholder="user" th:field="*{user}">
                 </td>
                 <td>
-                    <input type="text" placeholder="book_title" th:field="*{title}">
-                </td>
-                <td>
-                    <input type="text" placeholder="size (pages)" th:field="*{size}">
+                    <input type="text" placeholder="password" th:field="*{password}">
                 </td>
                 <td>
                     <input type="submit" value="save">
@@ -50,11 +47,11 @@
         </table>
     </form>
 
-    <form method="post" th:action="@{/books/remove}">
+    <form method="post" th:action="@{/users/unregister}">
         <table>
             <tr>
                 <td>
-                    <input type="text" placeholder="id number" th:name="bookIdToRemove">
+                    <input type="text" placeholder="id number" th:name="userIdToRemove">
                 </td>
                 <td>
                     <input type="submit" value="remove">
@@ -64,27 +61,18 @@
     </form>
 
 
-    <table id="books">
+    <table id="users">
         <tr>
             <th>id</th>
-            <th>author</th>
-            <th>title</th>
-            <th>size</th>
+            <th>user</th>
+            <th>password</th>
         </tr>
-        <tr th:each="book : ${bookList}">
-            <td th:text="${book.id}"></td>
-            <td th:text="${book.author}"></td>
-            <td th:text="${book.title}"></td>
-            <td th:text="${book.size}"></td>
+        <tr th:each="user : ${userList}">
+            <td th:text="${user.id}"></td>
+            <td th:text="${user.user}"></td>
+            <td th:text="${user.password}"></td>
         </tr>
     </table>
-
-    <a th:href="@{/users/control}">
-        <button name="user_control" type="button">
-            Go to user control
-        </button>
-    </a>
-
 </div>
 </body>
 </html>
