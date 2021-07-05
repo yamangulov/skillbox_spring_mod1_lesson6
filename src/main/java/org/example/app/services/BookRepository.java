@@ -12,7 +12,6 @@ public class BookRepository implements ProjectRepository<Book> {
 
     private final Logger logger = Logger.getLogger(BookRepository.class);
     private List<Book> repo = new ArrayList<>();
-    private List<Book> oldRepo = new ArrayList<>();
 
     @Override
     public List<Book> retrieveAll() {
@@ -20,7 +19,7 @@ public class BookRepository implements ProjectRepository<Book> {
     }
 
     @Override
-    public void filterByParams(String author, String title, Integer minSize, Integer maxSize) {
+    public List<Book> filterByParams(String author, String title, Integer minSize, Integer maxSize) {
 
         List<Book> filteredRepo = new ArrayList<>();
 
@@ -46,10 +45,7 @@ public class BookRepository implements ProjectRepository<Book> {
                 }
             }
         }
-
-        oldRepo = new ArrayList<>(repo);
-        repo =  new ArrayList<>(filteredRepo);
-
+        return filteredRepo;
     }
 
     private List<Book> getInitFilteredBooks(Integer minSize, Integer maxSize, List<Book> filteredRepo, Book book) {
@@ -90,19 +86,11 @@ public class BookRepository implements ProjectRepository<Book> {
     }
 
     @Override
-    public void undoFilter() {
-        repo = new ArrayList<>(oldRepo);
-    }
-
-    @Override
     public void store(Book book) {
         if (!book.getAuthor().isEmpty() || !book.getTitle().isEmpty() || book.getSize() != null) {
             book.setId(book.hashCode());
             logger.info("store new book: " + book);
             repo.add(book);
-            //при добавлениях и удалениях книг нужно обновлять резервную копию репо, чтобы при
-            //случайном нажатии на "Reset filter" без выполненной фильтрации не сбросить список книг
-            oldRepo = new ArrayList<>(repo);
         } else {
             logger.info("there was an attempt to save book without author, title and size");
         }
@@ -114,7 +102,6 @@ public class BookRepository implements ProjectRepository<Book> {
             if (book.getId().equals(bookIdToRemove)) {
                 logger.info("remove book completed: " + book);
                 boolean remove = repo.remove(book);
-                oldRepo = new ArrayList<>(repo);
                 return remove;
             }
         }
@@ -159,7 +146,6 @@ public class BookRepository implements ProjectRepository<Book> {
             for (Book book : booksForRemoving) {
                 repo.remove(book);
             }
-            oldRepo = new ArrayList<>(repo);
             return true;
         }
         return false;

@@ -25,12 +25,7 @@ public class UserRepository implements ProjectRepository<User> {
     }
 
     @Override
-    public void filterByParams(String author, String title, Integer minSize, Integer maxSize) {
-        throw new NotImplementedException();
-    }
-
-    @Override
-    public void undoFilter() {
+    public List<User> filterByParams(String author, String title, Integer minSize, Integer maxSize) {
         throw new NotImplementedException();
     }
 

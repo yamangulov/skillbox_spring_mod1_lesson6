@@ -40,11 +40,7 @@ public class BookService {
         return bookRepo.removeItemBySize(size);
     }
 
-    public void filterByParams(String author, String title, Integer minSize, Integer maxSize) {
-        bookRepo.filterByParams(author, title, minSize, maxSize);
-    }
-
-    public void undoFilter() {
-        bookRepo.undoFilter();
+    public List<Book> filterByParams(String author, String title, Integer minSize, Integer maxSize) {
+        return bookRepo.filterByParams(author, title, minSize, maxSize);
     }
 }

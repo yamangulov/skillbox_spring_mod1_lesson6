@@ -31,18 +31,19 @@ public class BookShelfController {
         return "book_shelf";
     }
 
-    @PostMapping("/filter")
+    @GetMapping("/filter")
     public String filter(@RequestParam(value = "author") String author,
                          @RequestParam(value = "title") String title,
                          @RequestParam(value = "minSize") Integer minSize,
-                         @RequestParam(value = "maxSize") Integer maxSize) {
-        bookService.filterByParams(author, title, minSize, maxSize);
-        return "redirect:/books/shelf";
+                         @RequestParam(value = "maxSize") Integer maxSize,
+                         Model model) {
+        model.addAttribute("book", new Book());
+        model.addAttribute("bookList", bookService.filterByParams(author, title, minSize, maxSize));
+        return "book_shelf";
     }
 
     @GetMapping("/undoFilter")
     public String undoFilter() {
-        bookService.undoFilter();
         return "redirect:/books/shelf";
     }
 
