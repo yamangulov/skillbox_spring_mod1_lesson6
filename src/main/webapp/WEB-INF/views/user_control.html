@@ -36,9 +36,11 @@
             <tr>
                 <td>
                     <input type="text" placeholder="user" th:field="*{user}">
+                    <p th:if="${#fields.hasErrors('user')}">user must be not empty</p>
                 </td>
                 <td>
                     <input type="text" placeholder="password" th:field="*{password}">
+                    <p th:if="${#fields.hasErrors('password')}">password must be not empty</p>
                 </td>
                 <td>
                     <input type="submit" value="save">
@@ -47,11 +49,12 @@
         </table>
     </form>
 
-    <form method="post" th:action="@{/users/unregister}">
+    <form method="post" th:action="@{/users/unregister}" th:object="${userIdToRemove}">
         <table>
             <tr>
                 <td>
-                    <input type="text" placeholder="id number" th:name="userIdToRemove">
+                    <input type="text" placeholder="id number" th:field="*{id}">
+                    <p th:if="${#fields.hasErrors('id')}">id must be not empty</p>
                 </td>
                 <td>
                     <input type="submit" value="remove">

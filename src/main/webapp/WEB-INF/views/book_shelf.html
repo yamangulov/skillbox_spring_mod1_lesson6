@@ -36,12 +36,15 @@
             <tr>
                 <td>
                     <input type="text" placeholder="author" th:field="*{author}">
+                    <p th:if="${#fields.hasErrors('author')}">author must be not empty</p>
                 </td>
                 <td>
                     <input type="text" placeholder="book_title" th:field="*{title}">
+                    <p th:if="${#fields.hasErrors('title')}">title must be not empty</p>
                 </td>
                 <td>
                     <input type="text" placeholder="size (pages)" th:field="*{size}">
+                    <p th:if="${#fields.hasErrors('size')}">size must be digit from one and less than 4 signs</p>
                 </td>
                 <td>
                     <input type="submit" value="save">
@@ -50,73 +53,89 @@
         </table>
     </form>
 
-    <form method="post" th:action="@{/books/remove}">
+    <form method="post" th:action="@{/books/remove}" th:object="${bookIdToRemove}">
         <table>
             <tr>
                 <td>
-                    <input type="text" placeholder="id number" th:name="bookIdToRemove">
+                    <input type="text" placeholder="id number" th:field="*{id}">
                 </td>
                 <td>
                     <input type="submit" value="remove by id">
                 </td>
+                <td th:if="${#fields.hasErrors()}">
+                    <p>Wrong id or not found!</p>
+                </td>
             </tr>
         </table>
     </form>
 
-    <form method="post" th:action="@{/books/removeByAuthor}">
+    <form method="post" th:action="@{/books/removeByAuthor}" th:object="${bookAuthorToRemove}">
         <table>
             <tr>
                 <td>
-                    <input type="text" placeholder="author" th:name="bookAuthorToRemove">
+                    <input type="text" placeholder="author" th:field="*{author}">
                 </td>
                 <td>
                     <input type="submit" value="remove by author">
                 </td>
+                <td th:if="${#fields.hasErrors()}">
+                    <p>Author must be not empty!</p>
+                </td>
             </tr>
         </table>
     </form>
 
-    <form method="post" th:action="@{/books/removeByTitle}">
+    <form method="post" th:action="@{/books/removeByTitle}" th:object="${bookTitleToRemove}">
         <table>
             <tr>
                 <td>
-                    <input type="text" placeholder="title" th:name="bookTitleToRemove">
+                    <input type="text" placeholder="title" th:field="*{title}">
                 </td>
                 <td>
                     <input type="submit" value="remove by title">
                 </td>
+                <td th:if="${#fields.hasErrors()}">
+                    <p>Title must be not empty!</p>
+                </td>
             </tr>
         </table>
     </form>
 
-    <form method="post" th:action="@{/books/removeBySize}">
+    <form method="post" th:action="@{/books/removeBySize}" th:object="${bookSizeToRemove}">
         <table>
             <tr>
                 <td>
-                    <input type="text" placeholder="size" th:name="bookSizeToRemove">
+                    <input type="text" placeholder="size" th:field="*{size}">
                 </td>
                 <td>
                     <input type="submit" value="remove by size">
                 </td>
+                <td th:if="${#fields.hasErrors()}">
+                    <p>Size must be digit from one and less than 4 signs</p>
+                </td>
             </tr>
         </table>
     </form>
 
 
-    <form method="get" th:action="@{/books/filter}">
+    <form method="get" th:action="@{/books/filter}" th:object="${bookParamsToFilter}">
         <table>
             <tr>
                 <td>
-                    <input type="text" placeholder="author" th:name="author">
+                    <input type="text" placeholder="author" th:field="*{author}">
+                    <p th:if="${#fields.hasErrors('author')}">If not empty author must be less then 60 symbols</p>
                 </td>
                 <td>
-                    <input type="text" placeholder="book_title" th:name="title">
+                    <input type="text" placeholder="book_title" th:field="*{title}">
+                    <p th:if="${#fields.hasErrors('title')}">If not empty title must be less then 100 symbols</p>
                 </td>
                 <td>
-                    <input type="text" placeholder="min size (pages)" th:name="minSize">
+                    <input type="text" placeholder="min size (pages)" th:field="*{minSize}">
+                    <p th:if="${#fields.hasErrors('minSize')}">If not empty minSize must be digit from one and less than 4 signs</p>
                 </td>
                 <td>
-                    <input type="text" placeholder="max size (pages)" th:name="maxSize">
+                    <input type="text" placeholder="max size (pages)" th:name="*{maxSize}">
+                    <p th:if="${#fields.hasErrors('maxSize')}">If not empty maxSize must be digit from one and less than 4 signs</p>
                 </td>
                 <td>
                     <input type="submit" value="filter">

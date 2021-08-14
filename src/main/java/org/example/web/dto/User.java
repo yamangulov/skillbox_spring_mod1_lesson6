@@ -1,5 +1,8 @@
 package org.example.web.dto;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 /**
  * Created by Andrey.Yamangulov
  * Date: 04.07.2021
@@ -7,7 +10,11 @@ package org.example.web.dto;
  */
 public class User {
     private Integer id;
+
+    @NotEmpty
     private String user;
+
+    @NotEmpty
     private String password;
 
     public Integer getId() {

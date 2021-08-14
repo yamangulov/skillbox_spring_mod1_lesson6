@@ -21,8 +21,10 @@
         <img class="login_item" th:src="@{/images/book_icon.png}">
         <br>
         <input class="login_item" type="text" placeholder="enter username" th:field="*{username}">
+        <p th:if="${#fields.hasErrors('username')}">username must be not empty</p>
         <br>
         <input class="login_item" type="password" placeholder="password" th:field="*{password}">
+        <p th:if="${#fields.hasErrors('password')}">password must be not empty</p>
         <br>
         <input class="login_item" type="submit" value="login">
     </form>
