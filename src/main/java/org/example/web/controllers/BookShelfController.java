@@ -2,9 +2,11 @@ package org.example.web.controllers;
 
 import org.apache.log4j.Logger;
 import org.example.app.services.BookService;
+import org.example.app.services.FileService;
 import org.example.exception.FileUploadException;
 import org.example.web.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,10 +27,12 @@ public class BookShelfController {
 
     private final Logger logger = Logger.getLogger(BookShelfController.class);
     private final BookService bookService;
+    private final FileService fileService;
 
     @Autowired
-    public BookShelfController(BookService bookService) {
+    public BookShelfController(BookService bookService, FileService fileService) {
         this.bookService = bookService;
+        this.fileService = fileService;
     }
 
     @GetMapping("/shelf")
@@ -148,6 +152,12 @@ public class BookShelfController {
         return "redirect:/books/shelf";
     }
 
+    @GetMapping("/downloadFile")
+    @ResponseBody
+    public FileSystemResource downloadFile(@RequestParam("filename") String filename) {
+        return fileService.downloadFile(filename);
+    }
+
     private void setAttributesForRemoving(Model model) {
         model.addAttribute("book", new Book());
         model.addAttribute("bookList", bookService.getAllBooks());
@@ -160,6 +170,7 @@ public class BookShelfController {
         model.addAttribute("bookSizeToRemove", new BookSizeToRemove());
         model.addAttribute("bookList", bookService.getAllBooks());
         model.addAttribute("bookParamsToFilter", new BookParamsToFilter());
+        model.addAttribute("fileList", fileService.getAllFiles());
     }
 
     @ExceptionHandler(FileUploadException.class)

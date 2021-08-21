@@ -130,6 +130,23 @@
         </table>
     </form>
 
+    <table id="files">
+        <tr>
+            <th>filename</th>
+            <th></th>
+        </tr>
+        <tr th:each="file : ${fileList}">
+            <td th:text="${file}"></td>
+            <td>
+                <a th:href="@{|/books/downloadFile?filename=${file}|}">
+                    <button name="file_download" type="button">
+                        Download
+                    </button>
+                </a>
+            </td>
+        </tr>
+    </table>
+
     <form method="get" th:action="@{/books/filter}" th:object="${bookParamsToFilter}">
         <table>
             <tr>
