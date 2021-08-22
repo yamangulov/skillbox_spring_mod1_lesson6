@@ -7,19 +7,21 @@ import org.example.exception.FileUploadException;
 import org.example.web.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import static org.springframework.web.util.HtmlUtils.htmlUnescape;
+import static org.springframework.web.util.HtmlUtils.htmlEscape;
 
 @Controller
 @RequestMapping(value = "/books")
@@ -142,7 +144,7 @@ public class BookShelfController {
         }
 
         //htmlUnescape - для нормального отображения названий на кириллице
-        File serverFile = new File(dir.getAbsolutePath() + File.separator + htmlUnescape(name));
+        File serverFile = new File(dir.getAbsolutePath() + File.separator + htmlEscape(name, "UTF-8"));
         BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
         stream.write(bytes);
         stream.close();
@@ -154,7 +156,7 @@ public class BookShelfController {
 
     @GetMapping("/downloadFile")
     @ResponseBody
-    public FileSystemResource downloadFile(@RequestParam("filename") String filename) {
+    public ResponseEntity<FileSystemResource> downloadFile(@RequestParam("filename") String filename, HttpServletResponse response) throws IOException {
         return fileService.downloadFile(filename);
     }
 
