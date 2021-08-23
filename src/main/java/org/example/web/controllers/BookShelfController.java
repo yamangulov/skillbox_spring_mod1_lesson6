@@ -89,6 +89,9 @@ public class BookShelfController {
     public String removeBook(@Valid BookIdToRemove bookIdToRemove, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             setAttributesForRemoving(model);
+            model.addAttribute("bookAuthorToRemove", new BookAuthorToRemove());
+            model.addAttribute("bookTitleToRemove", new BookTitleToRemove());
+            model.addAttribute("bookSizeToRemove", new BookSizeToRemove());
             return "book_shelf";
         } else {
             bookService.removeBookById(bookIdToRemove.getId());
@@ -100,6 +103,9 @@ public class BookShelfController {
     public String removeBookByAuthor(@Valid BookAuthorToRemove bookAuthorToRemove, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             setAttributesForRemoving(model);
+            model.addAttribute("bookIdToRemove", new BookIdToRemove());
+            model.addAttribute("bookTitleToRemove", new BookTitleToRemove());
+            model.addAttribute("bookSizeToRemove", new BookSizeToRemove());
             return "book_shelf";
         } else {
             bookService.removeBookByAuthor(bookAuthorToRemove.getAuthor());
@@ -111,6 +117,9 @@ public class BookShelfController {
     public String removeBookByTitle(@Valid BookTitleToRemove bookTitleToRemove, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             setAttributesForRemoving(model);
+            model.addAttribute("bookIdToRemove", new BookIdToRemove());
+            model.addAttribute("bookAuthorToRemove", new BookAuthorToRemove());
+            model.addAttribute("bookSizeToRemove", new BookSizeToRemove());
             return "book_shelf";
         } else {
             bookService.removeBookByTitle(bookTitleToRemove.getTitle());
@@ -122,6 +131,9 @@ public class BookShelfController {
     public String removeBookBySize(@Valid BookSizeToRemove bookSizeToRemove, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             setAttributesForRemoving(model);
+            model.addAttribute("bookIdToRemove", new BookIdToRemove());
+            model.addAttribute("bookAuthorToRemove", new BookAuthorToRemove());
+            model.addAttribute("bookTitleToRemove", new BookTitleToRemove());
             return "book_shelf";
         } else {
             bookService.removeBookBySize(bookSizeToRemove.getSize());
@@ -163,6 +175,8 @@ public class BookShelfController {
     private void setAttributesForRemoving(Model model) {
         model.addAttribute("book", new Book());
         model.addAttribute("bookList", bookService.getAllBooks());
+        model.addAttribute("fileList", fileService.getAllFiles());
+        model.addAttribute("bookParamsToFilter", new BookParamsToFilter());
     }
 
     private void setAttributes(Model model) {
